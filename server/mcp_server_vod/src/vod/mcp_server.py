@@ -26,14 +26,17 @@ AVAILABLE_GROUPS = [
 "video_enhancement",
 # 上传相关
 'upload',
-# 视频播放相关
-"video_play"
+ "video_play",
 ]
 
+DISABLE_GROUPS = [
+    "video_play",
+    "edit",
+]
 
 DEFAULT_GROUPS = [
     "edit",
-    "video_play"
+    "video_play",
 ]
 
 TRANSCODE_GROUPS = {
@@ -48,6 +51,8 @@ TRANSCODE_GROUPS = {
     # 视频增强相关tools
     "video_enhancement",
 }
+
+ALL_GROUPS = 'all'
 def create_mcp_server(groups: list[str] = None, mcp: FastMCP = None):
     ## init api client
     service = VodAPI()
@@ -59,10 +64,17 @@ def create_mcp_server(groups: list[str] = None, mcp: FastMCP = None):
     env_type = os.getenv("MCP_TOOL_GROUPS")
     
     if groups is not None:
-        current_tool_groups = groups
+       if ALL_GROUPS in groups:
+            current_tool_groups = AVAILABLE_GROUPS
+       else:
+            current_tool_groups = groups
     elif env_type is not None:
+        env_grops= [group.strip() for group in env_type.split(",") if group.strip()]
         try:
-            current_tool_groups = [group.strip() for group in env_type.split(",") if group.strip()]
+            if ALL_GROUPS in env_grops:
+                current_tool_groups = AVAILABLE_GROUPS
+            else:
+                current_tool_groups = env_grops
             print(f"[MCP] Loaded tool groups from environment: {current_tool_groups}")
         except Exception as e:
             print(f"[MCP] Error parsing MCP_TOOL_GROUPS environment variable: {e}")

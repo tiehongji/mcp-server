@@ -1,6 +1,5 @@
 
 from src.vod.api.api import VodAPI
-from mcp.server.fastmcp import FastMCP
 
 from typing import Any, Dict
 from datetime import datetime, timezone, timedelta
@@ -190,7 +189,6 @@ def register_video_play_methods(service: VodAPI, public_methods: dict):
             }})
         return storageConfig 
   
-  
     def get_play_directurl(spaceName: str, fileName: str, expired_minutes: int = 60) -> str:
         """
         获取播放地址
@@ -216,7 +214,7 @@ def register_video_play_methods(service: VodAPI, public_methods: dict):
     public_methods["get_play_url"] = get_play_directurl
 
 
-def create_mcp_server(mcp: FastMCP, public_methods: dict, service: VodAPI):
+def create_mcp_server(mcp, public_methods: dict, service: VodAPI):
     @mcp.tool()
     def get_play_url(spaceName: str, fileName: str, expired_minutes: int = 60) -> str:
         """
