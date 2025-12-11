@@ -26,17 +26,17 @@ AVAILABLE_GROUPS = [
 "video_enhancement",
 # 上传相关
 'upload',
- "video_play",
+#  "video_play",
 ]
 
 DISABLE_GROUPS = [
     "video_play",
-    "edit",
+    "media_tasks"
 ]
 
 DEFAULT_GROUPS = [
     "edit",
-    "video_play",
+    # "video_play",
 ]
 
 TRANSCODE_GROUPS = {
@@ -155,7 +155,7 @@ def create_mcp_server(groups: list[str] = None, mcp: FastMCP = None):
     
     public_methods["update_media_publish_status"] = update_media_publish_status
     public_methods["get_play_video_info"] = get_play_video_info
-    register_video_play_methods(service,public_methods)
+    register_video_play_methods(mcp, service,public_methods)
 
     register_transcode_base_fn(service, public_methods)
     print(f"[MCP] Loaded tool groups: {public_methods}")
@@ -172,7 +172,7 @@ def create_mcp_server(groups: list[str] = None, mcp: FastMCP = None):
             if not file.endswith(".py") or file.startswith("_") or file == "__init__.py":
                     continue
             fileName = file[:-3]
-            if fileName not in AVAILABLE_GROUPS or fileName == 'media_tasks' or fileName not in groupList:
+            if fileName not in AVAILABLE_GROUPS or fileName in DISABLE_GROUPS or fileName not in groupList:
                 continue
             module_name = f"src.vod.mcp_tools.{fileName}"
             module = importlib.import_module(module_name)
