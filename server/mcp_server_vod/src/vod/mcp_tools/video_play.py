@@ -10,7 +10,8 @@ import secrets
 import json
 import re
 
-def register_video_play_methods(service: VodAPI, public_methods: dict,):
+def register_video_play_methods(service: VodAPI, public_methods: dict):
+   
     def str_to_number(s, default=None):
         if not isinstance(s, str):
             print(f"警告：输入不是字符串（类型：{type(s)}）")
@@ -137,12 +138,7 @@ def register_video_play_methods(service: VodAPI, public_methods: dict,):
         }})
         return available
 
-    def _gen_url(spaceName: str,domainObj: Dict[str, Any], path: str, expired_minutes: int) -> str:
-        # get available domain list
-        available_domains_list = _get_available_domain(spaceName)
-        domainLen = len(available_domains_list)
-        if domainLen > 0:
-             domainObj = available_domains_list[0]
+    def _gen_url(domainObj: Dict[str, Any], path: str, expired_minutes: int) -> str:
         is_https = _is_https_available(domainObj.get("Certificate"))
         fileName = f"/{path}"
         if ((domainObj.get("AuthInfo") or {}).get("AuthType") == "typea"):
@@ -185,14 +181,14 @@ def register_video_play_methods(service: VodAPI, public_methods: dict,):
                 "McpGetStorageConfig",
                 {"SpaceName": spaceName},
             )
-
+        storageConfig = {}
         if isinstance(reqs, str):
             reqs = json.loads(reqs)
             storageConfig = reqs.get("Result") or {}
             service.set_state({"storage_config":{
                 spaceName: storageConfig
             }})
-        return storageConfig or {}
+        return storageConfig 
   
   
     def get_play_directurl(spaceName: str, fileName: str, expired_minutes: int = 60) -> str:
@@ -211,7 +207,7 @@ def register_video_play_methods(service: VodAPI, public_methods: dict,):
         # if have available domain, use first domain
         if domainLen > 0:
             domainObj = available_domains_list[0]
-            urlPath = _gen_url(spaceName, domainObj,fileName, expired_minutes)
+            urlPath = _gen_url(domainObj,fileName, expired_minutes)
         else:
             # if no available domain, use wild url
             storageConfig = get_storage_config(spaceName)

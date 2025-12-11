@@ -11,13 +11,14 @@ class BaseService(VodService):
             region = "cn-north-1"
         else:
             region = os.getenv("VOLCENGINE_REGION")
-
         super().__init__(region=region)
         credentials = get_volcengine_credentials_base()
         self.set_ak(credentials.access_key_id)
         self.set_sk(credentials.secret_access_key)
         self.set_session_token(credentials.session_token)
         self.service_info.header["x-tt-mcp"] = 'volc'
+        if os.getenv("VOLCENGINE_HOST"):
+           self.set_host(os.getenv("VOLCENGINE_HOST"))        
         self.mcp_state = {}
         
     @staticmethod
