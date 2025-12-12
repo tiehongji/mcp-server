@@ -189,8 +189,8 @@ def register_video_play_methods(mcp,   service: VodAPI, public_methods: dict):
             }})
         return storageConfig 
   
-    # @mcp.tool()
-    def get_play_url(spaceName: str, fileName: str, expired_minutes: int = 60) -> str:
+    @mcp.tool()
+    def get_play_url(spaceName: str, fileName: str, expired_minutes: int = 60) -> dict :
         """
         获取播放地址
         Args:

@@ -29,6 +29,7 @@ def register_transcode_base_fn(service: VodAPI, public_methods: dict):
 
     def _start_execution(payload: Dict[str, Any]) -> Any:
         response = service.mcp_post("McpStartExecution", {}, json.dumps(payload))
+        raise Exception(f"start execution error: {response}")
         if isinstance(response, str):
             response = json.loads(response)
             result = response.get("Result", {})
