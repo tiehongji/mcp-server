@@ -26,17 +26,16 @@ AVAILABLE_GROUPS = [
 "video_enhancement",
 # 上传相关
 'upload',
-#  "video_play",
+ "video_play",
 ]
 
 DISABLE_GROUPS = [
-    "video_play",
     "media_tasks"
 ]
 
 DEFAULT_GROUPS = [
     "edit",
-    # "video_play",
+    "video_play",
 ]
 
 TRANSCODE_GROUPS = {
@@ -155,7 +154,7 @@ def create_mcp_server(groups: list[str] = None, mcp: FastMCP = None):
     
     public_methods["update_media_publish_status"] = update_media_publish_status
     public_methods["get_play_video_info"] = get_play_video_info
-    register_video_play_methods(mcp, service,public_methods)
+    register_video_play_methods(service,public_methods)
 
     register_transcode_base_fn(service, public_methods)
     print(f"[MCP] Loaded tool groups: {public_methods}")

@@ -9,7 +9,7 @@ import secrets
 import json
 import re
 
-def register_video_play_methods(mcp,   service: VodAPI, public_methods: dict):
+def register_video_play_methods(service: VodAPI, public_methods: dict):
    
     def str_to_number(s, default=None):
         if not isinstance(s, str):
@@ -189,8 +189,7 @@ def register_video_play_methods(mcp,   service: VodAPI, public_methods: dict):
             }})
         return storageConfig 
   
-    @mcp.tool()
-    def get_play_url(spaceName: str, fileName: str, expired_minutes: int = 60) -> dict :
+    def get_play_directurl(spaceName: str, fileName: str, expired_minutes: int = 60) -> Any :
         """
         获取播放地址
         Args:
@@ -212,22 +211,21 @@ def register_video_play_methods(mcp,   service: VodAPI, public_methods: dict):
             storageConfig = get_storage_config(spaceName)
             urlPath = _gen_wild_url(storageConfig, fileName)
         return urlPath
-    public_methods["get_play_url"] = get_play_url
-    # public_methods["get_play_url"] = get_play_directurl
+    public_methods["get_play_url"] = get_play_directurl
 
 
-# def create_mcp_server(mcp, public_methods: dict, service: VodAPI):
-#     @mcp.tool()
-#     def get_play_url(spaceName: str, fileName: str, expired_minutes: int = 60) -> str:
-#         """
-#         Obtain the video playback link through `fileName`
-#         Args:
-#             - spaceName: **必选字段** 空间名称
-#             - fileName: **必选字段** 文件名
-#             - expired_minutes: **可选字段** 过期时间，默认60分钟
-#         Returns:
-#             - 播放地址
-#         """
-#         return public_methods["get_play_url"](spaceName, fileName, expired_minutes)
+def create_mcp_server(mcp, public_methods: dict, service: VodAPI):
+    @mcp.tool()
+    def get_play_url(spaceName: str, fileName: str, expired_minutes: int = 60) -> Any:
+        """
+        Obtain the video playback link through `fileName`
+        Args:
+            - spaceName: **必选字段** 空间名称
+            - fileName: **必选字段** 文件名
+            - expired_minutes: **可选字段** 过期时间，默认60分钟
+        Returns:
+            - 播放地址
+        """
+        return public_methods["get_play_url"](spaceName, fileName, expired_minutes)
 
        
