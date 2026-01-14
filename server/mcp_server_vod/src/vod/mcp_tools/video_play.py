@@ -1,6 +1,6 @@
 
 from src.vod.api.api import VodAPI
-from mcp.server.fastmcp import FastMCP
+from mcp.server.fastmcp import FastMCP, Context
 
 from typing import Any, Dict
 from datetime import datetime, timezone, timedelta
@@ -311,12 +311,15 @@ def register_video_play_methods(service: VodAPI, public_methods: dict,):
 
 
 def create_mcp_server(mcp: FastMCP, public_methods: dict, service: VodAPI):
-    @mcp.tool()
-    def get_play_url( type: str, source: str,  spaceName: str, expired_minutes: int = 60) -> Any:
-        """
-        Obtain the video playback link through `directurl` or `vid`， 通过 directurl or vid 获取视频播放地址,
+    @mcp.tool(
+        description= """
+         Obtain the video playback link through `directurl` or `vid`， 通过 directurl or vid 获取视频播放地址,
         Note:
-            expired_minutes 仅在 directurl 模式下生效
+            expired_minutes 仅在 `directurl` 模式下生效
+        """,
+    )
+    def get_play_url(contxt: Context, type: str, source: str,  spaceName: str, expired_minutes: int = 60) -> str:
+        """
         Args:
             - spaceName: **必选字段** 空间名称
             - source: **必选字段** 文件名 or vid
@@ -329,6 +332,7 @@ def create_mcp_server(mcp: FastMCP, public_methods: dict, service: VodAPI):
         Returns:
             - 播放地址
         """
+        logging.debug(f"get_play_url: spaceName={spaceName}, source={source}, type={type}, context={contxt}, expired_minutes={expired_minutes}")
         if type == "directurl":
             return public_methods["get_play_url"](spaceName, source, expired_minutes)
         elif type == "vid":
