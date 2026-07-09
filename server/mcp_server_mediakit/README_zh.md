@@ -2,25 +2,16 @@
 
 MediaKit MCP 是火山引擎 AI MediaKit 面向 AI 时代推出的标准能力插件。它基于 MCP（Model Context Protocol）协议，将云端专业的视频剪辑、音频处理、字幕处理、画质增强等原子能力封装为智能体可直观调用的工具。通过 MediaKit MCP，开发者可直接以自然语言驱动 AI 智能体完成复杂的云端媒体处理任务。
 
-<<<<<<< HEAD
-| 字段 | 取值 |
-| ---- | ------------------------------------------- |
-| 版本 | v1.0.0 |
-| 描述 | MediaKit MCP 智能媒体助手 |
-| 分类 | 视频云、音视频编辑、画质增强 |
-=======
-| 字段 | 取值 |
-| --- | --- |
-| 版本 | v1.0.0 |
-| 描述 | MediaKit MCP 智能媒体助手 |
-| 分类 | 视频云、音视频编辑、画质增强 |
-
-> > > > > > > 62a9e293bc254026e04eaec63ca9d229aaa8e89e
-> > > > > > > | 标签 | MCP、MediaKit、视频剪辑、音频处理、画质增强 |
+| 字段 | 取值                                                  |
+| ---- | ----------------------------------------------------- |
+| 版本 | v1.0.0                                                |
+| 描述 | MediaKit MCP 智能媒体助手                             |
+| 分类 | 视频云、音视频编辑、画质增强、图像处理                |
+| 标签 | MCP、MediaKit、视频剪辑、音频处理、画质增强、图像处理 |
 
 ## 工具概览
 
-MediaKit MCP 已开放的能力覆盖了从异步任务查询到深度媒体编辑、视频增强的全流程。所有工具均支持通过“分组（Group）”或“工具名”进行动态加载，以优化智能体的推理效率。
+MediaKit MCP 已开放的能力覆盖了从异步任务查询到深度媒体编辑、视频增强与理解、音频处理、图像处理的全流程。所有工具均支持通过“分组（Group）”或“工具名”进行动态加载，以优化智能体的推理效率。
 
 <table>
   <thead>
@@ -41,8 +32,8 @@ MediaKit MCP 已开放的能力覆盖了从异步任务查询到深度媒体编�
       </td>
     </tr>
     <tr>
-      <td rowspan="11"><b>视频剪辑</b></td>
-      <td rowspan="11">editing</td>
+      <td rowspan="17"><b>视频剪辑</b></td>
+      <td rowspan="17">editing</td>
       <td>add_image_to_video</td>
       <td><b>视频加图片</b>：在视频画面上叠加图片，常用于添加图片水印。详细输入和输出参数请见
         <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L44">add_image_to_video</a>。
@@ -109,17 +100,171 @@ MediaKit MCP 已开放的能力覆盖了从异步任务查询到深度媒体编�
       </td>
     </tr>
     <tr>
-      <td rowspan="2"><b>视频增强</b></td>
-      <td rowspan="2">video</td>
-      <td>erase_video_subtitle_pro</td>
-      <td><b>视频字幕擦除</b>：针对视频中的字幕或文本进行高质量无痕擦除。详细输入和输出参数请见
-        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L60">erase_video_subtitle_pro</a>。
+      <td>adjust_audio_speed</td>
+      <td><b>音频播放调速</b>：调整音频播放速度，实现快放或慢放效果。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L237">adjust_audio_speed</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>adjust_video_volume</td>
+      <td><b>视频音量调整</b>：调整视频音量大小，支持静音。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L253">adjust_video_volume</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>apply_video_filter</td>
+      <td><b>视频滤镜</b>：为视频添加指定的预设滤镜效果。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L269">apply_video_filter</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>fade_audio</td>
+      <td><b>音频淡入淡出</b>：对输入音频实现淡入淡出效果。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L285">fade_audio</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>fade_video_audio</td>
+      <td><b>视频声轨淡入淡出</b>：对输入视频的声轨实现淡入淡出效果。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L302">fade_video_audio</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>mix_audio</td>
+      <td><b>音频混音</b>：将多个音频文件（背景音乐、音效、人声等）混音生成一个新的音频文件。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L320">mix_audio</a>。
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="14"><b>视频增强与理解</b></td>
+      <td rowspan="14">video</td>
+      <td>analyze_video_highlights</td>
+      <td><b>视频高光分析</b>：智能捕捉视频情绪波峰与关键动作，输出时间戳、高光打分、OCR 文本和画面描述等元数据。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L38">analyze_video_highlights</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>analyze_video_storyline</td>
+      <td><b>视频剧情线分析</b>：智能解析影视剧内容，生成由时序剧情片段与聚合高光组成的结构化剧情线。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L58">analyze_video_storyline</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>asr_subtitles</td>
+      <td><b>语音识别字幕</b>：对输入视频或音频进行语音识别，输出带时间戳的字幕片段。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L77">asr_subtitles</a>。
       </td>
     </tr>
     <tr>
       <td>enhance_video</td>
       <td><b>画质增强</b>：面向 AIGC、UGC、短剧、教育、游戏、老片修复等场景提升视频画质。详细输入和输出参数请见
-        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L38">enhance_video</a>。
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L99">enhance_video</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>enhance_video_generative</td>
+      <td><b>生成式视频修复</b>：基于扩散大模型的生成式视频修复技术，补全细节、生成高保真视频内容。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L122">enhance_video_generative</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>erase_video_subtitle</td>
+      <td><b>视频字幕擦除</b>：智能检测并擦除视频画面中已有的硬字幕，保留原始背景。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L140">erase_video_subtitle</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>erase_video_subtitle_pro</td>
+      <td><b>视频字幕擦除（Pro）</b>：针对视频中的字幕或文本进行高质量无痕擦除。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L156">erase_video_subtitle_pro</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>generate_highlights_microdrama</td>
+      <td><b>短剧高光智剪</b>：深度理解短剧角色、剧情与故事线，自动提取高光片段并混剪成投流视频。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L175">generate_highlights_microdrama</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>generate_highlights_minigame</td>
+      <td><b>小游戏高光智剪</b>：识别小游戏录屏中的核心玩法与高光事件，快速生成买量视频素材。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L199">generate_highlights_minigame</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>matte_greenscreen_video</td>
+      <td><b>绿幕抠像</b>：对绿幕或纯色背景视频抠图，移除背景生成背景透明的视频。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L219">matte_greenscreen_video</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>matte_portrait_video</td>
+      <td><b>人像抠像</b>：自动识别人物主体并移除背景，生成背景透明的视频。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L237">matte_portrait_video</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>probe_video_metadata</td>
+      <td><b>视频元信息探测</b>：探测视频 URL，输出标准化媒资元信息（容器层、视频流层、音频流层）。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L255">probe_video_metadata</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>segment_scenes</td>
+      <td><b>场景切分</b>：依据视频转场与画面变化自动切分场景，输出切片时间轴和（可选）切片文件。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L272">segment_scenes</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>video_ocr</td>
+      <td><b>视频 OCR</b>：识别视频画面中的字幕/文字内容，输出带时间戳的字幕片段。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L293">video_ocr</a>。
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="2"><b>音频处理</b></td>
+      <td rowspan="2">audio</td>
+      <td>separate_voice</td>
+      <td><b>人声分离</b>：将音频中的人声与背景音精准分离，输出为两个独立音轨。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/audio.py#L32">separate_voice</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>probe_audio_metadata</td>
+      <td><b>音频元信息探测</b>：获取音频详细元信息，输出容器层信息与音频流元信息。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/audio.py#L51">probe_audio_metadata</a>。
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="5"><b>图像处理</b></td>
+      <td rowspan="5">image</td>
+      <td>image_ocr</td>
+      <td><b>图片 OCR</b>：识别图片中的通用印刷体文字，返回可编辑文本、文字框坐标和置信度。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/image.py#L32">image_ocr</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>erase_image</td>
+      <td><b>图像擦除</b>：自动检测并擦除图片中的图标、文字或指定区域，并对擦除区域进行背景智能填充。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/image.py#L48">erase_image</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>remove_image_background</td>
+      <td><b>图像背景移除</b>：自动识别并保留图像主体，移除背景生成背景透明的图片，支持通用、人像、商品场景。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/image.py#L67">remove_image_background</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>enhance_image</td>
+      <td><b>图像画质增强</b>：基于图像内容理解智能决策，提升图片分辨率、清晰度与色彩表现。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/image.py#L89">enhance_image</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>evaluate_image_quality</td>
+      <td><b>图像质量评估</b>：对图片进行主客观画质与美学评分，支持标准版多维评分与专业版大模型评分。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/image.py#L108">evaluate_image_quality</a>。
       </td>
     </tr>
   </tbody>
@@ -132,7 +277,6 @@ Trae 是一款 AI 原生 IDE，提供了强大的智能体协作能力。通过�
 ## 前提条件
 
 - 已准备可用的 MediaKit API Key。
-- 已确认 MediaKit 服务接入地址。若未显式配置，默认使用 `https://amk.cn-beijing.volces.com`。
 - 已安装 [Trae 客户端](https://www.trae.com.cn/)。
 - 使用本地模式或云端自部署模式时，需确保本地开发环境已安装 `uvx`。可通过 `uvx --version` 检查；若提示未安装，请参考 [uv 官方安装文档](https://docs.astral.sh/uv/getting-started/installation/)。
 
@@ -142,18 +286,10 @@ Trae 是一款 AI 原生 IDE，提供了强大的智能体协作能力。通过�
 
 根据您的使用场景，选择以下两种接入模式之一：
 
-<<<<<<< HEAD
-| 模式 | 适用场景 | 接入方式 |
+| 模式                       | 适用场景                           | 接入方式                                                                  |
 | -------------------------- | ---------------------------------- | ------------------------------------------------------------------------- |
-| **本地模式（JSON Local）** | 个人调试、快速试用、无需自建服务。 | 通过 `uvx` 直接从 `mcp-server` 仓库子目录拉起 MediaKit MCP。 |
-| **云端模式（JSON URL）** | 团队共享、长期稳定使用、统一运维。 | 先自行部署 MediaKit MCP Server，再使用部署后的 Streamable HTTP 地址接入。 |
-=======
-| 模式 | 适用场景 | 接入方式 |
-| --- | --- | --- |
-| **本地模式（JSON Local）** | 个人调试、快速试用、无需自建服务。 | 通过 `uvx` 直接从 `mcp-server` 仓库子目录拉起 MediaKit MCP。 |
-| **云端模式（JSON URL）** | 团队共享、长期稳定使用、统一运维。 | 先自行部署 MediaKit MCP Server，再使用部署后的 Streamable HTTP 地址接入。 |
-
-> > > > > > > 62a9e293bc254026e04eaec63ca9d229aaa8e89e
+| **本地模式（JSON Local）** | 个人调试、快速试用、无需自建服务。 | 通过 `uvx` 直接从 `mcp-server` 仓库子目录拉起 MediaKit MCP。              |
+| **云端模式（JSON URL）**   | 团队共享、长期稳定使用、统一运维。 | 先自行部署 MediaKit MCP Server，再使用部署后的 Streamable HTTP 地址接入。 |
 
 ### 步骤 2：添加 MCP 配置
 
@@ -177,8 +313,7 @@ Trae 是一款 AI 原生 IDE，提供了强大的智能体协作能力。通过�
       ],
       "env": {
         "MEDIAKIT_API_KEY": "your-api-key",
-        "MEDIAKIT_ENDPOINT": "https://amk.cn-beijing.volces.com",
-        "MCP_DOMAINS": "editing,video"
+        "MCP_DOMAINS": "editing,video,audio,image"
       }
     }
   }
@@ -189,8 +324,7 @@ Trae 是一款 AI 原生 IDE，提供了强大的智能体协作能力。通过�
 
 - `mediakit_mcp`：MCP 服务名称，您可以根据需要自定义。
 - `MEDIAKIT_API_KEY`：请替换为您的 MediaKit API Key。
-- `MEDIAKIT_ENDPOINT`：MediaKit 服务地址。若使用默认接入地址，可保留 `https://amk.cn-beijing.volces.com`。
-- `MCP_DOMAINS`：按分组加载工具，例如 `editing,video`。如需按工具名精确加载，可改用 `MCP_TOOLS`。
+- `MCP_DOMAINS`：按分组加载工具，例如 `editing,video,audio,image`。如需按工具名精确加载，可改用 `MCP_TOOLS`。
 
 如需按工具名加载，可参考以下写法：
 
@@ -206,7 +340,6 @@ Trae 是一款 AI 原生 IDE，提供了强大的智能体协作能力。通过�
       ],
       "env": {
         "MEDIAKIT_API_KEY": "your-api-key",
-        "MEDIAKIT_ENDPOINT": "https://amk.cn-beijing.volces.com",
         "MCP_TOOLS": "trim_video,query_task"
       }
     }
@@ -222,7 +355,6 @@ Trae 是一款 AI 原生 IDE，提供了强大的智能体协作能力。通过�
 
 ```bash
 export MEDIAKIT_API_KEY="your-api-key"
-export MEDIAKIT_ENDPOINT="https://amk.cn-beijing.volces.com"
 export MCP_SERVER_HOST="0.0.0.0"
 export MCP_SERVER_PORT="8000"
 export STREAMABLE_HTTP_PATH="/mcp"
@@ -239,8 +371,7 @@ uvx --from "git+https://github.com/volcengine/mcp-server.git#subdirectory=server
       "url": "https://your-domain/mcp",
       "headers": {
         "x-amk-api-key": "your-api-key",
-        "x-mediakit-endpoint": "https://amk.cn-beijing.volces.com",
-        "x-mcp-domains": "editing,video"
+        "x-mcp-domains": "editing,video,audio,image"
       }
     }
   }
@@ -252,8 +383,7 @@ uvx --from "git+https://github.com/volcengine/mcp-server.git#subdirectory=server
 - `mediakit_mcp`：MCP 服务名称，您可以根据需要自定义。
 - `url`：请替换为您自行部署后的 MediaKit MCP Streamable HTTP 地址，例如 `https://your-domain/mcp`。
 - `x-amk-api-key`：请替换为您的 MediaKit API Key。
-- `x-mediakit-endpoint`：MediaKit 服务地址。若使用默认接入地址，可填写 `https://amk.cn-beijing.volces.com`。
-- `x-mcp-domains`：按分组加载工具，例如 `editing,video`。如需按工具名精确加载，可改用 `x-mcp-tools`。
+- `x-mcp-domains`：按分组加载工具，例如 `editing,video,audio,image`。如需按工具名精确加载，可改用 `x-mcp-tools`。
 
 如需按工具名加载，可参考以下写法：
 
@@ -264,7 +394,6 @@ uvx --from "git+https://github.com/volcengine/mcp-server.git#subdirectory=server
       "url": "https://your-domain/mcp",
       "headers": {
         "x-amk-api-key": "your-api-key",
-        "x-mediakit-endpoint": "https://amk.cn-beijing.volces.com",
         "x-mcp-tools": "trim_video,query_task"
       }
     }
@@ -312,15 +441,9 @@ uvx --from "git+https://github.com/volcengine/mcp-server.git#subdirectory=server
       <td>MediaKit API Key，用于请求鉴权。</td>
     </tr>
     <tr>
-      <td>x-mediakit-endpoint</td>
-      <td>MEDIAKIT_ENDPOINT</td>
-      <td>https://amk.cn-beijing.volces.com</td>
-      <td>MediaKit 服务地址；未配置时默认使用该地址。</td>
-    </tr>
-    <tr>
       <td>x-mcp-domains</td>
       <td>MCP_DOMAINS</td>
-      <td>editing,video</td>
+      <td>editing,video,audio,image</td>
       <td>按工具分组加载，多个分组用英文逗号分隔。</td>
     </tr>
     <tr>
@@ -334,85 +457,18 @@ uvx --from "git+https://github.com/volcengine/mcp-server.git#subdirectory=server
 
 云端自部署时，还可按需使用以下服务启动参数：
 
-<<<<<<< HEAD
-| 环境变量 | 默认值 | 说明 |
+| 环境变量               | 默认值    | 说明                   |
 | ---------------------- | --------- | ---------------------- |
-| `MCP_SERVER_HOST` | `0.0.0.0` | MCP 服务监听地址。 |
-| `MCP_SERVER_PORT` | `8000` | MCP 服务监听端口。 |
-| `STREAMABLE_HTTP_PATH` | `/mcp` | Streamable HTTP 路径。 |
-=======
-| 环境变量 | 默认值 | 说明 |
-| --- | --- | --- |
-| `MCP_SERVER_HOST` | `0.0.0.0` | MCP 服务监听地址。 |
-| `MCP_SERVER_PORT` | `8000` | MCP 服务监听端口。 |
-| `STREAMABLE_HTTP_PATH` | `/mcp` | Streamable HTTP 路径。 |
+| `MCP_SERVER_HOST`      | `0.0.0.0` | MCP 服务监听地址。     |
+| `MCP_SERVER_PORT`      | `8000`    | MCP 服务监听端口。     |
+| `STREAMABLE_HTTP_PATH` | `/mcp`    | Streamable HTTP 路径。 |
 
-> > > > > > > 62a9e293bc254026e04eaec63ca9d229aaa8e89e
+## 许可证
 
-## 工具详情
+本项目基于 **MIT 许可证** 开源。
 
-### query_task
+该软件运行时会调用 MediaKit 云端 API，使用这些 API 需要遵守如下协议：
 
-查询异步任务状态。支持单次查询，也支持通过 `poll_interval_seconds` 与 `max_poll_attempts` 控制轮询。
-
-### add_image_to_video
-
-在视频中添加图片覆盖层，可用于图片水印。支持配置图片宽高、水平位置、垂直位置、开始时间和结束时间。
-
-### add_subtitle_to_video
-
-将字幕文件或字幕文本压制到视频画面中。支持字幕位置、字体大小、字体颜色和字体类型配置。
-
-### adjust_video_speed
-
-调整视频播放速度，实现快放或慢放效果。支持 `0.1` 到 `4` 倍速。
-
-### concat_audio
-
-拼接多个音频片段，最多支持 100 个音频 URL。
-
-### concat_video
-
-拼接多个视频片段，最多支持 100 个视频 URL，并可配置转场效果。
-
-### extract_audio
-
-从视频中提取音频，支持输出 `mp3` 或 `m4a`。
-
-### flip_video
-
-对视频画面进行水平或垂直镜像翻转。
-
-### image_to_video
-
-将多张图片合成为动画视频，并支持配置转场效果。
-
-### mux_audio_video
-
-将视频与音频合成为一个视频文件。支持保留原视频音频，并支持按视频或音频基准进行时长对齐。
-
-### trim_audio
-
-按秒级起止时间裁剪音频文件。
-
-### trim_video
-
-按秒级起止时间裁剪视频文件。
-
-### erase_video_subtitle_pro
-
-针对视频中的字幕或文本进行高质量擦除，尽可能还原视频画面。支持 `mp4`、`flv`、`ts`、`avi`、`mov`、`wmv`、`mkv` 等主流视频格式。
-
-### enhance_video
-
-针对 `common`、`ugc`、`short_series`、`aigc`、`old_film` 等场景进行画质增强，支持标准版和专业版工具版本。
-
-## License
-
-MIT
-
-该软件运行时会调用 MediaKit 的 API，使用这些 API 需要遵守如下协议和隐私政策：
-
-- [视频云服务专用条款](https://www.volcengine.com/docs/6448/79646?lang=zh)
-- [智能处理服务计费结算规则](https://www.volcengine.com/docs/6448/104992?lang=zh)
-- [智能处理服务等级协议](https://www.volcengine.com/docs/6448/79648?lang=zh)
+- `https://www.volcengine.com/docs/6448/79646?lang=zh`
+- `https://www.volcengine.com/docs/6448/104992?lang=zh`
+- `https://www.volcengine.com/docs/6448/79648?lang=zh`

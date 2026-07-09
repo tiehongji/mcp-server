@@ -2,26 +2,16 @@
 
 MediaKit MCP Server is a standard AI capability plugin for Volcano Engine AI MediaKit. It is built on the MCP (Model Context Protocol) protocol and exposes cloud media capabilities such as video editing, audio processing, subtitle processing, and video enhancement as tools that can be called by AI agents. With MediaKit MCP, developers can use natural language to drive intelligent media production workflows.
 
-<<<<<<< HEAD
-| Field | Value |
-| ----------- | ----------------------------------------------------------------- |
-| Version | v1.0.0 |
-| Description | MediaKit MCP intelligent media assistant |
-| Categories | Media cloud, audio/video editing, video enhancement |
-| Tags | MCP, MediaKit, video editing, audio processing, video enhancement |
-=======
-| Field | Value |
-| --- | --- |
-| Version | v1.0.0 |
-| Description | MediaKit MCP intelligent media assistant |
-| Categories | Media cloud, audio/video editing, video enhancement |
-| Tags | MCP, MediaKit, video editing, audio processing, video enhancement |
-
-> > > > > > > 62a9e293bc254026e04eaec63ca9d229aaa8e89e
+| Field       | Value                                                                               |
+| ----------- | ----------------------------------------------------------------------------------- |
+| Version     | v1.0.0                                                                              |
+| Description | MediaKit MCP intelligent media assistant                                            |
+| Categories  | Media cloud, audio/video editing, video enhancement, image processing               |
+| Tags        | MCP, MediaKit, video editing, audio processing, video enhancement, image processing |
 
 ## Tool Overview
 
-MediaKit MCP provides tools that cover the full workflow from asynchronous task query to deep media editing and video enhancement. All tools support dynamic loading by group or by tool name to optimize agent reasoning efficiency.
+MediaKit MCP provides tools that cover the full workflow from asynchronous task query to deep media editing, video enhancement and understanding, audio processing, and image processing. All tools support dynamic loading by group or by tool name to optimize agent reasoning efficiency.
 
 <table>
   <thead>
@@ -42,8 +32,8 @@ MediaKit MCP provides tools that cover the full workflow from asynchronous task 
       </td>
     </tr>
     <tr>
-      <td rowspan="11"><b>Video editing</b></td>
-      <td rowspan="11">editing</td>
+      <td rowspan="17"><b>Video editing</b></td>
+      <td rowspan="17">editing</td>
       <td>add_image_to_video</td>
       <td><b>Add image to video</b>: Overlay an image on a video, commonly used for image watermarks. For detailed input and output parameters, see
         <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L44">add_image_to_video</a>.
@@ -110,17 +100,171 @@ MediaKit MCP provides tools that cover the full workflow from asynchronous task 
       </td>
     </tr>
     <tr>
-      <td rowspan="2"><b>Video enhancement</b></td>
-      <td rowspan="2">video</td>
-      <td>erase_video_subtitle_pro</td>
-      <td><b>Erase video subtitles</b>: Remove subtitles or text from a video with high-quality restoration. For detailed input and output parameters, see
-        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L60">erase_video_subtitle_pro</a>.
+      <td>adjust_audio_speed</td>
+      <td><b>Adjust audio speed</b>: Change audio playback speed for fast or slow effects. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L237">adjust_audio_speed</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>adjust_video_volume</td>
+      <td><b>Adjust video volume</b>: Change video volume, including muting. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L253">adjust_video_volume</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>apply_video_filter</td>
+      <td><b>Apply video filter</b>: Add a preset filter style to a video. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L269">apply_video_filter</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>fade_audio</td>
+      <td><b>Fade audio</b>: Apply fade-in and fade-out effects to an audio file. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L285">fade_audio</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>fade_video_audio</td>
+      <td><b>Fade video audio</b>: Apply fade-in and fade-out effects to a video's audio track. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L302">fade_video_audio</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>mix_audio</td>
+      <td><b>Mix audio</b>: Mix multiple audio files (background music, sound effects, vocals) into one audio file. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/editing.py#L320">mix_audio</a>.
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="14"><b>Video enhancement &amp; understanding</b></td>
+      <td rowspan="14">video</td>
+      <td>analyze_video_highlights</td>
+      <td><b>Analyze video highlights</b>: Detect emotional peaks and key actions and output highlight metadata (timestamps, scores, OCR text, scene descriptions). For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L38">analyze_video_highlights</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>analyze_video_storyline</td>
+      <td><b>Analyze video storyline</b>: Parse film/TV content into a structured storyline of chronological clips and aggregated highlights. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L58">analyze_video_storyline</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>asr_subtitles</td>
+      <td><b>Speech to subtitles</b>: Run speech recognition on a video or audio and output timestamped subtitle segments. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L77">asr_subtitles</a>.
       </td>
     </tr>
     <tr>
       <td>enhance_video</td>
       <td><b>Enhance video</b>: Improve video quality for AIGC, UGC, short drama, education, gaming, and old film restoration scenarios. For detailed input and output parameters, see
-        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L38">enhance_video</a>.
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L99">enhance_video</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>enhance_video_generative</td>
+      <td><b>Generative video restoration</b>: Diffusion-model based restoration that reconstructs details and generates high-fidelity content. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L122">enhance_video_generative</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>erase_video_subtitle</td>
+      <td><b>Erase video subtitles</b>: Detect and erase existing hard subtitles while preserving the original background. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L140">erase_video_subtitle</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>erase_video_subtitle_pro</td>
+      <td><b>Erase video subtitles (pro)</b>: Remove subtitles or text from a video with high-quality restoration. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L156">erase_video_subtitle_pro</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>generate_highlights_microdrama</td>
+      <td><b>Microdrama highlights</b>: Extract highlights from microdramas and produce promotional cut videos. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L175">generate_highlights_microdrama</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>generate_highlights_minigame</td>
+      <td><b>Minigame highlights</b>: Identify core gameplay and highlight events in minigame recordings and generate marketing video assets. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L199">generate_highlights_minigame</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>matte_greenscreen_video</td>
+      <td><b>Green screen matting</b>: Matte videos with a green screen or solid-color background to produce a transparent-background video. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L219">matte_greenscreen_video</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>matte_portrait_video</td>
+      <td><b>Portrait matting</b>: Identify the human subject and remove the background to produce a transparent-background video. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L237">matte_portrait_video</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>probe_video_metadata</td>
+      <td><b>Probe video metadata</b>: Probe a video URL and output standardized media metadata (container, video stream, audio stream). For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L255">probe_video_metadata</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>segment_scenes</td>
+      <td><b>Segment scenes</b>: Automatically split a video into scenes based on transitions and visual changes. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L272">segment_scenes</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>video_ocr</td>
+      <td><b>Video OCR</b>: Recognize subtitles/text in video frames and output timestamped subtitle segments. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L293">video_ocr</a>.
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="2"><b>Audio processing</b></td>
+      <td rowspan="2">audio</td>
+      <td>separate_voice</td>
+      <td><b>Separate voice</b>: Separate vocals and background sound into two independent tracks. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/audio.py#L32">separate_voice</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>probe_audio_metadata</td>
+      <td><b>Probe audio metadata</b>: Retrieve detailed audio metadata (container and audio stream). For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/audio.py#L51">probe_audio_metadata</a>.
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="5"><b>Image processing</b></td>
+      <td rowspan="5">image</td>
+      <td>image_ocr</td>
+      <td><b>Image OCR</b>: Recognize general printed text and return editable text, bounding boxes, and confidence. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/image.py#L32">image_ocr</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>erase_image</td>
+      <td><b>Erase image</b>: Detect and erase icons, text, or specified regions with intelligent background inpainting. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/image.py#L48">erase_image</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>remove_image_background</td>
+      <td><b>Remove image background</b>: Keep the subject and remove the background to produce a transparent-background image. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/image.py#L67">remove_image_background</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>enhance_image</td>
+      <td><b>Enhance image</b>: Improve image resolution, sharpness, and color based on content understanding. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/image.py#L89">enhance_image</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>evaluate_image_quality</td>
+      <td><b>Evaluate image quality</b>: Score image quality and aesthetics (subjective and objective). For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/image.py#L108">evaluate_image_quality</a>.
       </td>
     </tr>
   </tbody>
@@ -133,7 +277,6 @@ Trae is an AI-native IDE with strong agent collaboration capabilities. By connec
 ## Prerequisites
 
 - Prepare a valid MediaKit API key.
-- Confirm the MediaKit service endpoint. If not explicitly configured, the default is `https://amk.cn-beijing.volces.com`.
 - Install the [Trae client](https://www.trae.com.cn/).
 - For local mode or self-hosted cloud mode, make sure `uvx` is installed in your local environment. Run `uvx --version` to check. If it is not installed, follow the [uv installation guide](https://docs.astral.sh/uv/getting-started/installation/).
 
@@ -143,18 +286,10 @@ Trae is an AI-native IDE with strong agent collaboration capabilities. By connec
 
 Choose one of the following modes based on your usage scenario:
 
-<<<<<<< HEAD
-| Mode | Best for | Access method |
+| Mode                        | Best for                                                           | Access method                                                                                  |
 | --------------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
-| **Local Mode (JSON Local)** | Personal debugging, quick trials, no self-hosted service required. | Use `uvx` to launch MediaKit MCP directly from the `mcp-server` repository subdirectory. |
-| **Cloud Mode (JSON URL)** | Team sharing, long-term usage, centralized operations. | Deploy MediaKit MCP Server yourself, then connect using the deployed Streamable HTTP endpoint. |
-=======
-| Mode | Best for | Access method |
-| --- | --- | --- |
-| **Local Mode (JSON Local)** | Personal debugging, quick trials, no self-hosted service required. | Use `uvx` to launch MediaKit MCP directly from the `mcp-server` repository subdirectory. |
-| **Cloud Mode (JSON URL)** | Team sharing, long-term usage, centralized operations. | Deploy MediaKit MCP Server yourself, then connect using the deployed Streamable HTTP endpoint. |
-
-> > > > > > > 62a9e293bc254026e04eaec63ca9d229aaa8e89e
+| **Local Mode (JSON Local)** | Personal debugging, quick trials, no self-hosted service required. | Use `uvx` to launch MediaKit MCP directly from the `mcp-server` repository subdirectory.       |
+| **Cloud Mode (JSON URL)**   | Team sharing, long-term usage, centralized operations.             | Deploy MediaKit MCP Server yourself, then connect using the deployed Streamable HTTP endpoint. |
 
 ### Step 2: Add MCP Configuration
 
@@ -178,8 +313,7 @@ Copy the following JSON and replace the fields as needed. Trae uses `uvx` to fet
       ],
       "env": {
         "MEDIAKIT_API_KEY": "your-api-key",
-        "MEDIAKIT_ENDPOINT": "https://amk.cn-beijing.volces.com",
-        "MCP_DOMAINS": "editing,video"
+        "MCP_DOMAINS": "editing,video,audio,image"
       }
     }
   }
@@ -190,8 +324,7 @@ Copy the following JSON and replace the fields as needed. Trae uses `uvx` to fet
 
 - `mediakit_mcp`: The MCP service name. You can customize it.
 - `MEDIAKIT_API_KEY`: Replace with your MediaKit API key.
-- `MEDIAKIT_ENDPOINT`: The MediaKit service endpoint. Keep `https://amk.cn-beijing.volces.com` if you use the default endpoint.
-- `MCP_DOMAINS`: Load tools by group, for example `editing,video`. To load tools by exact tool name, use `MCP_TOOLS` instead.
+- `MCP_DOMAINS`: Load tools by group, for example `editing,video,audio,image`. To load tools by exact tool name, use `MCP_TOOLS` instead.
 
 To load by tool name, use a configuration like this:
 
@@ -207,7 +340,6 @@ To load by tool name, use a configuration like this:
       ],
       "env": {
         "MEDIAKIT_API_KEY": "your-api-key",
-        "MEDIAKIT_ENDPOINT": "https://amk.cn-beijing.volces.com",
         "MCP_TOOLS": "trim_video,query_task"
       }
     }
@@ -223,7 +355,6 @@ A simple startup example is:
 
 ```bash
 export MEDIAKIT_API_KEY="your-api-key"
-export MEDIAKIT_ENDPOINT="https://amk.cn-beijing.volces.com"
 export MCP_SERVER_HOST="0.0.0.0"
 export MCP_SERVER_PORT="8000"
 export STREAMABLE_HTTP_PATH="/mcp"
@@ -240,8 +371,7 @@ After deployment, copy the following JSON and replace the fields as needed:
       "url": "https://your-domain/mcp",
       "headers": {
         "x-amk-api-key": "your-api-key",
-        "x-mediakit-endpoint": "https://amk.cn-beijing.volces.com",
-        "x-mcp-domains": "editing,video"
+        "x-mcp-domains": "editing,video,audio,image"
       }
     }
   }
@@ -253,8 +383,7 @@ After deployment, copy the following JSON and replace the fields as needed:
 - `mediakit_mcp`: The MCP service name. You can customize it.
 - `url`: Replace with your self-hosted MediaKit MCP Streamable HTTP URL, such as `https://your-domain/mcp`.
 - `x-amk-api-key`: Replace with your MediaKit API key.
-- `x-mediakit-endpoint`: The MediaKit service endpoint. Use `https://amk.cn-beijing.volces.com` if you use the default endpoint.
-- `x-mcp-domains`: Load tools by group, for example `editing,video`. To load tools by exact tool name, use `x-mcp-tools` instead.
+- `x-mcp-domains`: Load tools by group, for example `editing,video,audio,image`. To load tools by exact tool name, use `x-mcp-tools` instead.
 
 To load by tool name, use a configuration like this:
 
@@ -265,7 +394,6 @@ To load by tool name, use a configuration like this:
       "url": "https://your-domain/mcp",
       "headers": {
         "x-amk-api-key": "your-api-key",
-        "x-mediakit-endpoint": "https://amk.cn-beijing.volces.com",
         "x-mcp-tools": "trim_video,query_task"
       }
     }
@@ -313,15 +441,9 @@ The table below lists the core MediaKit MCP configuration fields for cloud mode 
       <td>MediaKit API key used for authentication.</td>
     </tr>
     <tr>
-      <td>x-mediakit-endpoint</td>
-      <td>MEDIAKIT_ENDPOINT</td>
-      <td>https://amk.cn-beijing.volces.com</td>
-      <td>MediaKit service endpoint. The default value is this endpoint.</td>
-    </tr>
-    <tr>
       <td>x-mcp-domains</td>
       <td>MCP_DOMAINS</td>
-      <td>editing,video</td>
+      <td>editing,video,audio,image</td>
       <td>Load tools by group. Separate multiple groups with commas.</td>
     </tr>
     <tr>
@@ -335,85 +457,18 @@ The table below lists the core MediaKit MCP configuration fields for cloud mode 
 
 For self-hosted cloud mode, you can also configure the following startup parameters:
 
-<<<<<<< HEAD
-| Environment variable | Default value | Description |
+| Environment variable   | Default value | Description                 |
 | ---------------------- | ------------- | --------------------------- |
-| `MCP_SERVER_HOST` | `0.0.0.0` | MCP service bind address. |
-| `MCP_SERVER_PORT` | `8000` | MCP service listening port. |
-| `STREAMABLE_HTTP_PATH` | `/mcp` | Streamable HTTP path. |
-=======
-| Environment variable | Default value | Description |
-| --- | --- | --- |
-| `MCP_SERVER_HOST` | `0.0.0.0` | MCP service bind address. |
-| `MCP_SERVER_PORT` | `8000` | MCP service listening port. |
-| `STREAMABLE_HTTP_PATH` | `/mcp` | Streamable HTTP path. |
-
-> > > > > > > 62a9e293bc254026e04eaec63ca9d229aaa8e89e
-
-## Tool Details
-
-### query_task
-
-Query asynchronous task status. Supports one-shot query or polling through `poll_interval_seconds` and `max_poll_attempts`.
-
-### add_image_to_video
-
-Add an image overlay to a video. Commonly used for image watermarks. Supports image width, height, horizontal position, vertical position, start time, and end time.
-
-### add_subtitle_to_video
-
-Burn subtitle files or subtitle text into a video. Supports subtitle position, font size, font color, and font type.
-
-### adjust_video_speed
-
-Adjust video playback speed. Supports speed values from `0.1` to `4`.
-
-### concat_audio
-
-Concatenate multiple audio clips. Supports up to 100 audio URLs.
-
-### concat_video
-
-Concatenate multiple video clips. Supports up to 100 video URLs and optional transition effects.
-
-### extract_audio
-
-Extract audio from a video. Supports `mp3` or `m4a` output.
-
-### flip_video
-
-Flip video frames horizontally or vertically.
-
-### image_to_video
-
-Create an animated video from multiple images and optional transition effects.
-
-### mux_audio_video
-
-Combine a video and an audio file into one video. Supports preserving the original video audio and synchronizing duration by video or audio timeline.
-
-### trim_audio
-
-Trim an audio file by start and end time in seconds.
-
-### trim_video
-
-Trim a video by start and end time in seconds.
-
-### erase_video_subtitle_pro
-
-Remove subtitles or text from a video with high-quality restoration. Supports mainstream video formats such as `mp4`, `flv`, `ts`, `avi`, `mov`, `wmv`, and `mkv`.
-
-### enhance_video
-
-Enhance video quality for scenarios such as `common`, `ugc`, `short_series`, `aigc`, and `old_film`. Supports both standard and professional versions.
+| `MCP_SERVER_HOST`      | `0.0.0.0`     | MCP service bind address.   |
+| `MCP_SERVER_PORT`      | `8000`        | MCP service listening port. |
+| `STREAMABLE_HTTP_PATH` | `/mcp`        | Streamable HTTP path.       |
 
 ## License
 
-MIT
+This project is open-sourced under the **MIT License**.
 
-This software calls MediaKit APIs at runtime. Use of these APIs is subject to the following terms and privacy policies:
+At runtime, this software calls the MediaKit cloud APIs. Using these APIs is subject to the following agreements:
 
-- [Video Cloud Service Special Terms](https://www.volcengine.com/docs/6448/79646?lang=zh)
-- [Intelligent Processing Service Billing Rules](https://www.volcengine.com/docs/6448/104992?lang=zh)
-- [Intelligent Processing Service Level Agreement](https://www.volcengine.com/docs/6448/79648?lang=zh)
+- `https://www.volcengine.com/docs/6448/79646?lang=zh`
+- `https://www.volcengine.com/docs/6448/104992?lang=zh`
+- `https://www.volcengine.com/docs/6448/79648?lang=zh`
