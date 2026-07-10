@@ -149,6 +149,18 @@ MediaKit MCP 已开放的能力覆盖了从异步任务查询到深度媒体编�
         <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L58">analyze_video_storyline</a>。
       </td>
     </tr>
+     <tr>
+      <td>enhance_video_fast</td>
+      <td><b>视频画质增强极速版</b>：采用速度优先的画质增强策略，适合时延敏感型业务场景。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L121">enhance_video_fast</a>。
+      </td>
+    </tr>
+    <tr>
+      <td>video_understand_router</td>
+      <td><b>视频理解智能策略</b>：基于视觉大模型分析一个或多个视频，返回视频级结构化理解结果。详细输入和输出参数请见
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L328">video_understand_router</a>。
+      </td>
+    </tr>
     <tr>
       <td>asr_subtitles</td>
       <td><b>语音识别字幕</b>：对输入视频或音频进行语音识别，输出带时间戳的字幕片段。详细输入和输出参数请见

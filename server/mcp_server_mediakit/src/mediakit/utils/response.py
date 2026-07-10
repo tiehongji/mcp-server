@@ -12,6 +12,7 @@ def async_task_response(result: dict[str, Any]) -> dict[str, Any]:
         正向: { "task_id": "xxx", "request_id": "xxx" }
         失败: { "task_id": "xxx", "request_id": "xxx", "error": "<message>" }
     """
+    print("resultresultresultresult", result)
     if not isinstance(result, dict):
         return {"task_id": None}
 

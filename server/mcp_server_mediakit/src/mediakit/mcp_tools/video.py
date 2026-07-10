@@ -30,7 +30,7 @@ class EraseVideoSubtitleProEraseRatioLocationItem(TypedDict):
     bottom_right_x: Required[float]
     bottom_right_y: Required[float]
 
-TOOL_NAMES = ['analyze_video_highlights', 'analyze_video_storyline', 'asr_subtitles', 'enhance_video', 'enhance_video_generative', 'erase_video_subtitle', 'erase_video_subtitle_pro', 'generate_highlights_microdrama', 'generate_highlights_minigame', 'matte_greenscreen_video', 'matte_portrait_video', 'probe_video_metadata', 'segment_scenes', 'video_ocr']
+TOOL_NAMES = ['analyze_video_highlights', 'analyze_video_storyline', 'asr_subtitles', 'enhance_video', 'enhance_video_fast', 'enhance_video_generative', 'erase_video_subtitle', 'erase_video_subtitle_pro', 'generate_highlights_microdrama', 'generate_highlights_minigame', 'matte_greenscreen_video', 'matte_portrait_video', 'probe_video_metadata', 'segment_scenes', 'video_ocr', 'video_understand_router']
 
 
 def register_tools(mcp, client: MediKitClient) -> None:
@@ -78,7 +78,7 @@ def register_tools(mcp, client: MediKitClient) -> None:
         video_url: Optional[str] = Field(None, description="输入视频 Url（需公网可访问），与audio_url二选一，都存在时优先取video_url"),
         audio_url: Optional[str] = Field(None, description="输入音频 Url（需公网可访问），与video_url二选一，不能都为空"),
         content_type: Optional[str] = Field(None, description="识别类型，默认值为空，算法会自动探测类型，speech: 对话，singing: 歌唱"),
-        language: Optional[str] = Field(None, description="识别提示语言 ID (默认值为空，算法会自动探测语种）\n分类：简体中文，ID：cmn-Hans-CN\n分类：英语，ID：eng-US\n"),
+        language: Optional[str] = Field(None, description="识别提示语言 ID (默认值为空，算法会自动探测语种）\n分类：简体中文，ID：cmn-Hans-CN\n分类：英语，ID：eng-US"),
         enable_speaker_info: Optional[bool] = Field(False, description="是否开启说话人识别"),
         enable_confidence: Optional[bool] = Field(False, description="是否返回置信度"),
         callback_args: Optional[str] = Field(None, description="可选，回调参数"),
@@ -114,6 +114,25 @@ def register_tools(mcp, client: MediKitClient) -> None:
 使用限制：单文件大小不超过100G。"""
         try:
             result = client.call(api_name="enhance_video", video_url=video_url, scene=scene, tool_version=tool_version, resolution=resolution, resolution_limit=resolution_limit, bitrate_level=bitrate_level, fps=fps, callback_args=callback_args, client_token=client_token)
+            return async_task_response(result)
+        except Exception as exc:
+            return error_response(str(exc))
+
+    @mcp.tool(name="enhance_video_fast", description="集成轻量级超分与智能画质增强能力，采用速度优先算法优化策略，高效兼顾处理效率与画面效果，适配各类时延敏感型业务场景。 使用 task_id, 调用 query_task 方法获取结果")
+    async def enhance_video_fast(
+        video_url: str = Field(..., description="输入视频。String 类型，支持 `http://xxx或https://xxx格式`  URL"),
+        resolution: Optional[str] = Field(None, description="目标分辨率。支持的取值如下所示。配置此参数后，不可同时配置resolution_limit字段"),
+        resolution_limit: Optional[int] = Field(None, description="指定输出视频的短边像素值，取值范围为 [128, 2160]。设置后，系统将锁定视频的短边像素值为设定值，并在保持原视频宽高比的前提下，等比缩放至该限制值。示例：若原视频为 640x480 (4:3)，设置 resolution_limit 为 720，则输出视频的短边将提升至 720，宽度等比缩放至 960。配置此参数后，不可同时配置resolution字段"),
+        bitrate_level: Optional[str] = Field('medium', description="码率档位。输出视频的目标平均码率。该参数将决定视频的视觉质量和最终的文件体积。参数取值：高码率、中码率（推荐码率）、低码率。非必填，默认为中码率。"),
+        fps: Optional[float] = Field(None, description="目标帧率，单位为 fps。取值范围为 [15, 120]。"),
+        callback_args: Optional[str] = Field(None, description="可选，回调参数"),
+        client_token: Optional[str] = Field(None, description="可选，用于幂等，默认幂等，用户可根据需求进行调整"),
+        *,
+        ctx: Context,
+    ) -> dict:
+        """集成轻量级超分与智能画质增强能力，采用速度优先算法优化策略，高效兼顾处理效率与画面效果，适配各类时延敏感型业务场景。"""
+        try:
+            result = client.call(api_name="enhance_video_fast", video_url=video_url, resolution=resolution, resolution_limit=resolution_limit, bitrate_level=bitrate_level, fps=fps, callback_args=callback_args, client_token=client_token)
             return async_task_response(result)
         except Exception as exc:
             return error_response(str(exc))
@@ -302,6 +321,28 @@ def register_tools(mcp, client: MediKitClient) -> None:
 支持格式：主流视频格式如 mp4、flv、ts、avi、mov、wmv、mkv。"""
         try:
             result = client.call(api_name="video_ocr", video_url=video_url, mode=mode, callback_args=callback_args, client_token=client_token)
+            return async_task_response(result)
+        except Exception as exc:
+            return error_response(str(exc))
+
+    @mcp.tool(name="video_understand_router", description="基于视觉大模型的通用视频内容分析算子，对输入的视频 URL 列表进行智能分析，\n输出视频级别的结构化理解结果，适用于内容审核、视频检索、标签生成等场景。\n使用限制：单次最多输入 10 个视频，单个视频时长不超过 2 小时。 使用 task_id, 调用 query_task 方法获取结果")
+    async def video_understand_router(
+        video_urls: List[str] = Field(..., description="待处理的视频 URL 列表，支持 HTTP/HTTPS 公网可访问链接，最多 10 个视频"),
+        prompt: str = Field(..., description="提示词"),
+        level: Optional[str] = Field('Economy', description="分析档位, 可选值: Economy, Balanced, Quality"),
+        prefer_endpoints: Optional[List[str]] = Field(None, description="优先使用指定的自定义推理点列表，最多 10 个，优先级高于prefer_models\n子项说明：指定使用的自定义推理点"),
+        prefer_models: Optional[List[str]] = Field(None, description="优先使用指定的模型列表，最多 10 个模型\n子项说明：指定使用的模型"),
+        manual_option: Optional[Dict[str, Any]] = Field(None, description="手动模式相关参数"),
+        callback_args: Optional[str] = Field(None, description="可选，回调参数"),
+        client_token: Optional[str] = Field(None, description="可选，用于幂等，默认幂等，用户可根据需求进行调整"),
+        *,
+        ctx: Context,
+    ) -> dict:
+        """基于视觉大模型的通用视频内容分析算子，对输入的视频 URL 列表进行智能分析，
+输出视频级别的结构化理解结果，适用于内容审核、视频检索、标签生成等场景。
+使用限制：单次最多输入 10 个视频，单个视频时长不超过 2 小时。"""
+        try:
+            result = client.call(api_name="video_understand_router", video_urls=video_urls, prompt=prompt, level=level, prefer_endpoints=prefer_endpoints, prefer_models=prefer_models, manual_option=manual_option, callback_args=callback_args, client_token=client_token)
             return async_task_response(result)
         except Exception as exc:
             return error_response(str(exc))

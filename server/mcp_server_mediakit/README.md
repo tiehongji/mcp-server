@@ -143,6 +143,18 @@ MediaKit MCP provides tools that cover the full workflow from asynchronous task 
         <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L38">analyze_video_highlights</a>.
       </td>
     </tr>
+     <tr>
+      <td>enhance_video_fast</td>
+      <td><b>Fast video enhancement</b>: Improve video quality with a speed-first enhancement strategy for latency-sensitive scenarios. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L121">enhance_video_fast</a>.
+      </td>
+    </tr>
+    <tr>
+      <td>video_understand_router</td>
+      <td><b>Video understanding router</b>: Analyze one or more videos with a visual large model and return structured video-level understanding results. For detailed input and output parameters, see
+        <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L328">video_understand_router</a>.
+      </td>
+    </tr>
     <tr>
       <td>analyze_video_storyline</td>
       <td><b>Analyze video storyline</b>: Parse film/TV content into a structured storyline of chronological clips and aggregated highlights. For detailed input and output parameters, see

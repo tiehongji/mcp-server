@@ -12,6 +12,7 @@ api_info = {
     "concat_video": {"path": "/api/v1/tools/concat-video", "method": "POST"},
     "enhance_image": {"path": "/api/v1/tools-sync/enhance-image", "method": "POST"},
     "enhance_video": {"path": "/api/v1/tools/enhance-video", "method": "POST"},
+    "enhance_video_fast": {"path": "/api/v1/tools/enhance-video-fast", "method": "POST"},
     "enhance_video_generative": {"path": "/api/v1/tools/enhance-video-generative", "method": "POST"},
     "erase_image": {"path": "/api/v1/tools-sync/erase-image", "method": "POST"},
     "erase_video_subtitle": {"path": "/api/v1/tools/erase-video-subtitle", "method": "POST"},
@@ -38,4 +39,5 @@ api_info = {
     "trim_audio": {"path": "/api/v1/tools/trim-audio", "method": "POST"},
     "trim_video": {"path": "/api/v1/tools/trim-video", "method": "POST"},
     "video_ocr": {"path": "/api/v1/tools/video-ocr", "method": "POST"},
+    "video_understand_router": {"path": "/api/v1/tools/video-understand-router", "method": "POST"},
 }
