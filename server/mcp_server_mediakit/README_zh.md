@@ -136,8 +136,8 @@ MediaKit MCP 已开放的能力覆盖了从异步任务查询到深度媒体编�
       </td>
     </tr>
     <tr>
-      <td rowspan="14"><b>视频增强与理解</b></td>
-      <td rowspan="14">video</td>
+      <td rowspan="16"><b>视频增强与理解</b></td>
+      <td rowspan="16">video</td>
       <td>analyze_video_highlights</td>
       <td><b>视频高光分析</b>：智能捕捉视频情绪波峰与关键动作，输出时间戳、高光打分、OCR 文本和画面描述等元数据。详细输入和输出参数请见
         <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L38">analyze_video_highlights</a>。

@@ -136,8 +136,8 @@ MediaKit MCP provides tools that cover the full workflow from asynchronous task 
       </td>
     </tr>
     <tr>
-      <td rowspan="14"><b>Video enhancement &amp; understanding</b></td>
-      <td rowspan="14">video</td>
+      <td rowspan="16"><b>Video enhancement &amp; understanding</b></td>
+      <td rowspan="16">video</td>
       <td>analyze_video_highlights</td>
       <td><b>Analyze video highlights</b>: Detect emotional peaks and key actions and output highlight metadata (timestamps, scores, OCR text, scene descriptions). For detailed input and output parameters, see
         <a href="https://github.com/volcengine/mcp-server/blob/main/server/mcp_server_mediakit/src/mediakit/mcp_tools/video.py#L38">analyze_video_highlights</a>.
