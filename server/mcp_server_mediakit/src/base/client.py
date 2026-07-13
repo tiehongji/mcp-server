@@ -177,6 +177,7 @@ class MediKitClient:
             "Content-Type": "application/json",
             "x-surface": self._resolve_surface(),
             "x-runtime": self._resolve_runtime(),
+            "X-Amk-Cli-Runtime": "mcp",
         }
         return headers
 
