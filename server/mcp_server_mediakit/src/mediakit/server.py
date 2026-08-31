@@ -5,6 +5,10 @@ import logging
 import os
 import sys
 
+from base.faas_bootstrap import prefer_installed_site_packages
+
+prefer_installed_site_packages()
+
 from fastmcp import FastMCP
 
 from base.constant import LOG_LEVEL_ENV, MEDIAKIT_API_KEY_ENV
