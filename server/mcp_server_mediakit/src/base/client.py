@@ -16,9 +16,11 @@ from typing import Any
 import httpx
 
 from .api_info import api_info
+from .header_utils import header_value
 from .constant import (
     DEFAULT_ENDPOINT,
     DEFAULT_RUNTIME,
+    DEFAULT_TASK_SOURCE,
     ENDPOINT_ENV,
     ENDPOINT_HEADER,
     LOGID_ENV,
@@ -27,6 +29,7 @@ from .constant import (
     MEDIAKIT_API_KEY_HEADER,
     RUNTIME_ENV,
     RUNTIME_HEADER,
+    TASK_SOURCE_ENV,
     TASK_SOURCE_HEADER,
     TOOL_NAME_HEADER,
 )
@@ -37,26 +40,28 @@ logger = logging.getLogger(__name__)
 def resolve_client_config(headers: dict[str, str] | None = None) -> ClientConfig:
     """解析 client 配置。
 
-    API Key 优先级：x-amk-api-key（Header）> MEDIAKIT_API_KEY（Env）
+    各字段优先级：HTTP Header > 环境变量 > 默认值（如适用）。
     """
     inbound = headers or {}
-    api_key = inbound.get(MEDIAKIT_API_KEY_HEADER, "").strip()
-    if not api_key:
-        api_key = os.environ.get(MEDIAKIT_API_KEY_ENV, "").strip()
+    api_key = header_value(inbound, MEDIAKIT_API_KEY_HEADER) or os.environ.get(
+        MEDIAKIT_API_KEY_ENV, ""
+    ).strip()
     if not api_key:
         raise ValueError(
             f"缺少 API Key，请设置 Header {MEDIAKIT_API_KEY_HEADER} "
             f"或环境变量 {MEDIAKIT_API_KEY_ENV}"
         )
-    endpoint = inbound.get(ENDPOINT_HEADER, "").strip() or os.environ.get(
+    endpoint = header_value(inbound, ENDPOINT_HEADER) or os.environ.get(
         ENDPOINT_ENV, ""
-    ) or DEFAULT_ENDPOINT
-    runtime = os.environ.get(RUNTIME_ENV, "") or DEFAULT_RUNTIME
-    logid = inbound.get(LOGID_HEADER, "").strip() or os.environ.get(LOGID_ENV, "")
+    ).strip() or DEFAULT_ENDPOINT
+    runtime = os.environ.get(RUNTIME_ENV, "").strip() or DEFAULT_RUNTIME
+    task_source = os.environ.get(TASK_SOURCE_ENV, "").strip() or DEFAULT_TASK_SOURCE
+    logid = header_value(inbound, LOGID_HEADER) or os.environ.get(LOGID_ENV, "").strip()
     return ClientConfig(
         api_key=api_key,
         endpoint=endpoint,
         runtime=runtime,
+        task_source=task_source,
         logid=logid or None,
     )
 
@@ -66,6 +71,7 @@ class ClientConfig:
     api_key: str
     endpoint: str
     runtime: str
+    task_source: str = DEFAULT_TASK_SOURCE
     logid: str | None = None
 
 
@@ -90,6 +96,7 @@ class MediakitClient:
                 api_key=api_key,
                 endpoint=os.environ.get(ENDPOINT_ENV, "") or DEFAULT_ENDPOINT,
                 runtime=os.environ.get(RUNTIME_ENV, "") or DEFAULT_RUNTIME,
+                task_source=os.environ.get(TASK_SOURCE_ENV, "") or DEFAULT_TASK_SOURCE,
                 logid=os.environ.get(LOGID_ENV, "").strip() or None,
             ),
             timeout=timeout,
@@ -108,7 +115,7 @@ class MediakitClient:
         headers: dict[str, str] = {
             "Content-Type": "application/json",
             RUNTIME_HEADER: self._config.runtime,
-            TASK_SOURCE_HEADER: "mcp",
+            TASK_SOURCE_HEADER: self._config.task_source,
             TOOL_NAME_HEADER: tool_name,
             "Authorization": f"Bearer {self._config.api_key}",
         }

@@ -8,6 +8,7 @@ from .constant import (
     MCP_TOOLS_ENV,
     MCP_TOOLS_HEADER,
 )
+from .header_utils import header_value
 
 
 def _parse_csv(value: str) -> set[str]:
@@ -21,17 +22,13 @@ def resolve_filter_config(
 ) -> tuple[set[str], set[str]]:
     """解析 domain / tool 过滤配置。
 
-    优先级：HTTP Header > 环境变量 > 无限制
+    各字段独立按 HTTP Header > 环境变量 > 无限制 解析。
     """
     inbound = headers or {}
-    domains_h = inbound.get(MCP_DOMAINS_HEADER, "")
-    tools_h = inbound.get(MCP_TOOLS_HEADER, "")
-    if domains_h or tools_h:
-        return _parse_csv(domains_h), _parse_csv(tools_h)
-
-    domains_e = os.environ.get(MCP_DOMAINS_ENV, "")
-    tools_e = os.environ.get(MCP_TOOLS_ENV, "")
-    if domains_e or tools_e:
-        return _parse_csv(domains_e), _parse_csv(tools_e)
-
-    return set(), set()
+    domains = _parse_csv(header_value(inbound, MCP_DOMAINS_HEADER)) or _parse_csv(
+        os.environ.get(MCP_DOMAINS_ENV, "")
+    )
+    tools = _parse_csv(header_value(inbound, MCP_TOOLS_HEADER)) or _parse_csv(
+        os.environ.get(MCP_TOOLS_ENV, "")
+    )
+    return domains, tools
